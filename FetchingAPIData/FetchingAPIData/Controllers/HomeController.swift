@@ -34,6 +34,7 @@ class HomeController: UIViewController {
     // MARK: - UI Setup
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
+        self.navigationItem.title = "Crypto"
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -69,6 +70,10 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        return self.tableView.deselectRow(at: indexPath, animated: true)
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        let coin = self.coins[indexPath.row]
+        let vc = ViewCryptoController(coin)
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }

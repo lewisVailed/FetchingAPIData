@@ -15,6 +15,7 @@
 		D79F80FC2B7E3FDE00570395 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79F80FB2B7E3FDE00570395 /* Constants.swift */; };
 		D79F81022B88DABA00570395 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79F81012B88DABA00570395 /* Coin.swift */; };
 		D79F81242B8B80C200570395 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79F81232B8B80C200570395 /* CoinCell.swift */; };
+		D7AA59D82B8E7BBA00DAF4CE /* ViewCryptoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AA59D72B8E7BBA00DAF4CE /* ViewCryptoController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		D79F80FB2B7E3FDE00570395 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D79F81012B88DABA00570395 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		D79F81232B8B80C200570395 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
+		D7AA59D72B8E7BBA00DAF4CE /* ViewCryptoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCryptoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				D79F80E52B7E3D4F00570395 /* HomeController.swift */,
+				D7AA59D72B8E7BBA00DAF4CE /* ViewCryptoController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				D79F81022B88DABA00570395 /* Coin.swift in Sources */,
 				D79F80E62B7E3D4F00570395 /* HomeController.swift in Sources */,
 				D79F80E22B7E3D4F00570395 /* AppDelegate.swift in Sources */,
+				D7AA59D82B8E7BBA00DAF4CE /* ViewCryptoController.swift in Sources */,
 				D79F80E42B7E3D4F00570395 /* SceneDelegate.swift in Sources */,
 				D79F81242B8B80C200570395 /* CoinCell.swift in Sources */,
 				D79F80FC2B7E3FDE00570395 /* Constants.swift in Sources */,
