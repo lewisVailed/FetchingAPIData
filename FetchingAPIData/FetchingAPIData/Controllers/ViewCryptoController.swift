@@ -10,10 +10,10 @@ import UIKit
 class ViewCryptoController: UIViewController {
 
     // MARK: - Variable
-    private let coin: Coin
+    let viewModel: ViewCryptoControllerViewModel
     
     // MARK: - UI Components
-    private let logo: UIImageView = {
+    private let coinLogo: UIImageView = {
         let logo = UIImageView()
         logo.image = UIImage(systemName: "questionmark")
         logo.tintColor = .label
@@ -81,8 +81,8 @@ class ViewCryptoController: UIViewController {
     }()
     
     // MARK: - Lifecycle
-    init(_ coin: Coin) {
-        self.coin = coin
+    init(_ viewModel: ViewCryptoControllerViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,36 +94,32 @@ class ViewCryptoController: UIViewController {
         super.viewDidLoad()
         self.setupUI()
 
-        self.rankLabel.text = self.coin.cmc_rank.description
-        self.priceLabel.text = self.coin.quote.CAD.price.description
-        self.marketCapLabel.text = self.coin.quote.CAD.market_cap.description
-        self.maxSupplyLabel.text = self.coin.max_supply?.description
+        self.rankLabel.text = self.viewModel.rankLabel
+        self.priceLabel.text = self.viewModel.priceLabel
+        self.marketCapLabel.text = self.viewModel.marketCapLabel
+        self.maxSupplyLabel.text = self.viewModel.maxSupplyLabel
         
-        let imageData = try? Data(contentsOf: self.coin.logoURL!)
-        if let imageData = imageData {
-            DispatchQueue.main.async { [weak self] in
-                self?.logo.image = UIImage(data: imageData)
+        self.viewModel.onImageLoaded = { [weak self] logoImage in
+            DispatchQueue.main.async {
+                self?.coinLogo.image = logoImage
             }
+            
         }
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = false
-        
-    }
     
     // MARK: - UI Setup
     private func setupUI() {
-        self.navigationItem.title = self.coin.name
+        self.navigationItem.title = self.viewModel.coin.name
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(didTapBackButton))
         self.view.backgroundColor = .systemBackground
         
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(contentView)
-        self.contentView.addSubview(logo)
+        self.contentView.addSubview(coinLogo)
         self.contentView.addSubview(vStack)
-        logo.translatesAutoresizingMaskIntoConstraints = false
+        coinLogo.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         vStack.translatesAutoresizingMaskIntoConstraints = false
@@ -146,14 +142,14 @@ class ViewCryptoController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
                         
-            logo.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            logo.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
-            logo.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            logo.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            logo.heightAnchor.constraint(equalToConstant: 150),
+            coinLogo.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            coinLogo.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
+            coinLogo.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            coinLogo.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            coinLogo.heightAnchor.constraint(equalToConstant: 150),
                         
             vStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            vStack.topAnchor.constraint(equalTo: self.logo.bottomAnchor, constant: 20),
+            vStack.topAnchor.constraint(equalTo: self.coinLogo.bottomAnchor, constant: 20),
             vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
