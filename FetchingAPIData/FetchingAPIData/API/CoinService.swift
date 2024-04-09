@@ -27,10 +27,31 @@ class CoinService {
             }
             
             if let resp = resp as? HTTPURLResponse, resp.statusCode != 200 {
-                // write later
+                
+                do {
+                    let coinError = try JSONDecoder().decode(CoinError.self, from: data ?? Data())
+                    completion(.failure(.serverError(coinError)))
+                                
+                } catch let err {
+                    completion(.failure(.unknown()))
+                    print(err.localizedDescription)
+                }
             }
             
-            
-        }
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let coinData = try decoder.decode(CoinArray.self, from: data)
+                    completion(.success(coinData.data))
+                                
+                } catch let err {
+                    completion(.failure(.decodingError()))
+                    print(err.localizedDescription)
+                }
+                            
+            } else {
+                completion(.failure(.unknown()))
+            }
+        }.resume()
     }
 }

@@ -10,14 +10,7 @@ import UIKit
 class HomeController: UIViewController {
 
     // MARK: - Variables
-    private let coins: [Coin] = [
-        Coin(id: 1, name: "Bitcoin", maxSupply: 200, rank: 1, pricingData: PricingData(CAD: CAD(price: 50000, market_cap: 1_000_000))),
-        Coin(id: 2, name: "Ethereum", maxSupply: nil, rank: 2, pricingData: PricingData(CAD: CAD(price: 2000, market_cap: 500_000))),
-        Coin(id: 3, name: "Monero", maxSupply: nil, rank: 3, pricingData: PricingData(CAD: CAD(price: 200, market_cap: 250_000)))
-    
-    
-    ]
-    
+    private let viewModel: HomeControllerViewModel
     
     // MARK: - UI Components
     private let tableView: UITableView = {
@@ -28,6 +21,14 @@ class HomeController: UIViewController {
     }()
     
     // MARK: - Lifecycle
+    init(_ viewModel: HomeControllerViewModel = HomeControllerViewModel()) {
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
@@ -81,6 +82,5 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         let vm = ViewCryptoControllerViewModel(coin)
         let vc = ViewCryptoController(vm)
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
