@@ -23,6 +23,7 @@ class HomeController: UIViewController {
     // MARK: - Lifecycle
     init(_ viewModel: HomeControllerViewModel = HomeControllerViewModel()) {
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil )
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +36,12 @@ class HomeController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.viewModel.onCoinsUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
         
     }
 
@@ -59,14 +66,14 @@ class HomeController: UIViewController {
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.coins.count
+        return self.viewModel.coins.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CoinCell.identifier, for: indexPath) as? CoinCell else {
             fatalError("Unable to dequeue CoinCell in HomeController")
         }
-        let coin = self.coins[indexPath.row]
+        let coin = self.viewModel.coins[indexPath.row]
         cell.configure(with: coin)
         
         return cell
@@ -78,7 +85,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        let coin = self.coins[indexPath.row]
+        let coin = self.viewModel.coins[indexPath.row]
         let vm = ViewCryptoControllerViewModel(coin)
         let vc = ViewCryptoController(vm)
         self.navigationController?.pushViewController(vc, animated: true)

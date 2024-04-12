@@ -24,11 +24,11 @@ enum Endpoint {
         var components = URLComponents()
         components.scheme = Constants.scheme
         components.host = Constants.baseURL
-        components.queryItems = self.queryItem
         components.port = Constants.port
         components.path = self.path
-        
+        components.queryItems = self.queryItems
         return components.url
+ 
     }
     
     private var path: String {
@@ -38,7 +38,7 @@ enum Endpoint {
         }
     }
     
-    private var queryItem: [URLQueryItem] {
+    private var queryItems: [URLQueryItem] {
         switch self {
         case .fetchCoins:
             return [

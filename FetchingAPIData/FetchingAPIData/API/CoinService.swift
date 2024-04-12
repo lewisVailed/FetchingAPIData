@@ -43,7 +43,7 @@ class CoinService {
                     let decoder = JSONDecoder()
                     let coinData = try decoder.decode(CoinArray.self, from: data)
                     completion(.success(coinData.data))
-                                
+                    
                 } catch let err {
                     completion(.failure(.decodingError()))
                     print(err.localizedDescription)

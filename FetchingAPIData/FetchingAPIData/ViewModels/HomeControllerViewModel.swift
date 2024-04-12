@@ -34,7 +34,7 @@ class HomeControllerViewModel {
                 print("DEBUG PRINT:", "\(coins.count) coins fetched.")
                 
             case .failure(let error):
-                self?.onErrorMessage?(error)
+                print(String(describing: error))
             }
         }
     }
