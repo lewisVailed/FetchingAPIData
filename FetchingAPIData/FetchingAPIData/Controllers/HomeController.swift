@@ -43,6 +43,27 @@ class HomeController: UIViewController {
             }
         }
         
+        self.viewModel.onErrorMessage = { [weak self] error in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                
+                switch error {
+                case .serverError(let serverError):
+                    alert.title = "Server Error \(serverError.errorCode)"
+                    alert.message = serverError.errorMessage
+                case .unknown(let string):
+                    alert.title = "Error Fetching Coins"
+                    alert.message = string
+                case .decodingError(let string):
+                    alert.title = "Error Parsing Data"
+                    alert.message = string
+                }
+                
+                self?.present(alert, animated: true, completion: nil)
+            }
+        }
+        
     }
 
     // MARK: - UI Setup
